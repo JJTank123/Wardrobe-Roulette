@@ -63,7 +63,7 @@ const clothingItems = [
   name: "T-Shirt",
   category: "top",
   price: 35,
-  images: ["images/tshirt1-1.png","images/tshirt1-2.png","images/tshirt1-3.png"]
+  images: ["tshirt1-1.png","tshirt1-2.png","tshirt1-3.png"]
 },
 {
   name: "Long Sleeve",
