@@ -70,20 +70,20 @@ const clothingItems = [
   category: "top",
   price: 65,
    yOffset: -20,
-  images: ["images/tshirt2-1.png","images/tshirt2-2.png","images/tshirt2-3.png"]
+  images: ["tshirt2-1.png","tshirt2-2.png","tshirt2-3.png"]
 },
 {
   name: "Polo Shirt",
   category: "top",
    yOffset: -8,
   price: 110,
-  images: ["images/tshirt3-1.png","images/tshirt3-2.png","images/tshirt3-3.png"]
+  images: ["tshirt3-1.png","tshirt3-2.png","tshirt3-3.png"]
 },
 {
   name: "Bottoms",
   category: "bottom",
   price: 35,
-  images: ["images/jeans1.png","images/jeans2.png","images/jeans3.png"]
+  images: ["jeans1.png","jeans2.png","jeans3.png"]
 }
 ];
 
