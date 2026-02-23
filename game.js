@@ -66,27 +66,27 @@ const clothingItems = [
   category: "top",
    yOffset: -8,
   price: 110,
-  images: ["luxury_pick1.png","luxury_pick2.png","luxury_pick3.png"]
+  images: ["images/Luxury_Pick/luxury_pick1.png","images/Luxury_Pick/luxury_pick2.png","images/Luxury_Pick/luxury_pick3.png"]
 },
 {
   name: "Budget Pick: Bottoms",
   category: "bottom",
   price: 35,
-  images: ["budget_pants1.png","budget_pants2.png","budget_pants3.png"]
+  images: ["images/Budget_Pick/budget_pants1.png","images/Budget_Pick/budget_pants2.png","images/Budget_Pick/budget_pants3.png"]
 }
 ,
 {
   name: "Smart Choice: Bottoms",
   category: "bottom",
   price: 65,
-  images: ["smart_pants1.png","smart_pants2.png","smart_pants3.png"]
+  images: ["images/Smart_Pick/smart_pants1.png","images/Smart_Pick/smart_pants2.png","images/Smart_Pick/smart_pants3.png"]
 }
 ,
 {
   name: "Luxury Pick: Bottoms",
   category: "bottom",
   price: 110,
-  images: ["luxury_pants1.png","luxury_pants2.png","luxury_pants3.png"]
+  images: ["images/Luxury_Pick/luxury_pants1.png","images/Luxury_Pick/luxury_pants2.png","images/Luxury_Pick/luxury_pants3.png"]
 }
 ];
 
@@ -117,21 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
 ====================================================== */
 
 function initWheel() {
-  resizeWheelCanvas();
-  window.addEventListener("resize", resizeWheelCanvas);
-}
-
-function resizeWheelCanvas() {
-  const canvas = document.getElementById("wheel");
-  if (!canvas) return;
-
-  const size = canvas.parentElement.clientWidth;
-
-  canvas.width = size;
-  canvas.height = size;
-
   drawWheel();
 }
+
 
 function drawWheel() {
 
@@ -172,7 +160,8 @@ ctx.textAlign = "right";
 ctx.textBaseline = "middle";
 
 ctx.fillStyle = "#222";
-ctx.font = `bold ${radius * 0.18}px Fredoka`;ctx.letterSpacing = "2px";
+ctx.font = "bold 44px Fredoka";
+ctx.letterSpacing = "2px";
 
 /* white outline for game look */
 ctx.lineWidth = 4;
