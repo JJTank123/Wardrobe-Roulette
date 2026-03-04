@@ -167,7 +167,7 @@ function spinWheel() {
     const selectedBudget = wheelValues[winningIndex];
 
     // Save budget
-    localStorage.setItem("gameBudget", selectedBudget);
+    localStorage.setItem("budget", selectedBudget);
 
     // Show result
     budgetDisplay.textContent = `Your budget is $${selectedBudget}!`;
