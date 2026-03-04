@@ -45,7 +45,7 @@ body.game-page .container {
 .mannequin-container {
   position: relative;
   width: 300px;
-  height: 450px;
+  height: 550px;
   border: 2px dashed #aaa;  /* optional dashed border to show empty space */
   border-radius: 12px;
   background: #f9f9f9;       /* light background so clothes stand out */
@@ -225,10 +225,14 @@ body.wheel-page {
 
 .wheel-layout {
   display: flex;
-  align-items: center;
-  gap: 80px;
-  width: 90%;
-  max-width: 1100px;
+  flex-direction: column;   /* STACK EVERYTHING */
+  align-items: center;      /* center horizontally */
+  gap: 40px;
+}
+.wheel {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .wheel-info {
@@ -238,6 +242,11 @@ body.wheel-page {
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   text-align: center;
   width: 360px;
+
+    display: flex;
+  flex-direction: column;   /* stack budget + start button */
+  align-items: center;
+  gap: 15px;
 }
 
 .wheel-info h1 {
@@ -296,65 +305,88 @@ body.wheel-page {
 }
 
 body.wheel-page .container {
+  display: flex;              /* 🔥 makes left/right layout */
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+
   background: white;
   padding: 50px 60px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-  text-align: center;
-  margin-bottom: 30px;
 }
+
+
+
+/* ========================================
+   NEW CSS SLICE WHEEL
+======================================== */
 
 .wheel-container {
   position: relative;
-  width: 600px;
-  height: 600px;
-  margin: auto;
-
+  width: 420px;
+  height: 420px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  filter: drop-shadow(0 0 25px rgba(255,255,255,0.6));
+  margin-left: 40px
 }
 
-
-#wheel {
-  display: block;
-  margin: auto;
-  filter: drop-shadow(0 0 25px rgba(255,255,255,0.6));
-  border-radius: 50%;
-  transition: transform 0.1s linear;
-}
-
-
-@keyframes idleSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-#stopper {
+/* Pointer */
+/* Pointer / stopper */
+.wheel-container::before {
+  content: "";
   position: absolute;
-  top: -30px;
-  left: 0;
-  right: 0;
-  margin: auto;
+  top: -15px;      /* move above wheel */
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-top: 30px solid #000;   /* flipped */
+  z-index: 20;
+}
+/* Wheel Circle */
+.wheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: transform 5s ease-out;
+  box-shadow:
+    0 0 0 6px #333,
+    0 0 0 15px #fff,
+    0 0 0 20px #111;
+}
 
-  width: fit-content;
-  font-size: 48px;
-  color: #ff4f81;
+/* Wheel slices */
+.wheel .number {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  transform-origin: bottom right;
+  transform: rotate(calc(60deg * var(--i)));
+  clip-path: polygon(0 0, 70% 0, 100% 100%, 0 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--clr);
+}
 
-  text-shadow:
-    0 0 10px white,
-    0 0 20px white;
+.wheel .number span {
+  transform: rotate(45deg);
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+}
 
-  animation: bounce 1s infinite alternate;
+.wheel .number span::before {
+  content: "$";
+  font-size: 0.7em;
 }
 
 
-@keyframes bounce {
-  from { transform: translate(-50%,0); }
-  to   { transform: translate(-50%,6px); }
-}
+
 
 
 .bg-decor::before,
@@ -440,7 +472,7 @@ body.start-screen {
 
 #nextBtn:hover {
   transform: scale(1.1);
-  box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 15px 25px rgba(19, 11, 11, 0.5);
 }
 
 .slide .tip {
@@ -499,4 +531,119 @@ body.wheel-page button:active {
   box-shadow:
     0 2px 0 #c93a66,
     0 6px 10px rgba(0,0,0,0.3);
+}
+
+/* Clothing spawn animation */
+@keyframes dropIn {
+  0% {
+    transform: translate(-50%, -80px) scale(0.8);
+    opacity: 0;
+  }
+  70% {
+    transform: translate(-50%, 5px) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.clothing-drop {
+  animation: dropIn 0.45s ease-out;
+}
+
+@keyframes shakeWarning {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-4px); }
+}
+
+.budget-shake {
+  animation: shakeWarning 0.4s;
+}
+
+@keyframes popSelect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.pop {
+  animation: popSelect 0.25s ease;
+}
+
+@keyframes unlockGlow {
+  0% { box-shadow: 0 0 0 rgba(0,255,120,0); }
+  50% { box-shadow: 0 0 25px rgba(0,255,120,0.9); }
+  100% { box-shadow: 0 0 0 rgba(0,255,120,0); }
+}
+
+.unlocked {
+  background: #b7f3b7;
+  animation: unlockGlow 0.8s ease;
+}
+
+.slide {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all 0.5s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@keyframes titleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.9);
+    letter-spacing: 8px;
+  }
+  60% {
+    transform: translateY(5px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    letter-spacing: 2px;
+  }
+}
+
+.game-title {
+  animation: titleReveal 1s ease-out forwards;
+}
+
+@keyframes floatSlow {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.float-item {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+/* Spin button centered on wheel */
+.wheel-container .spinBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  width: 90px;
+  height: 90px;
+  
+  background: linear-gradient(45deg,#ff4f81,#ff7eb3);
+  border-radius: 50%;
+  border: 4px solid #c93a66;
+  z-index: 30;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #fff;
+  cursor: pointer;
 }
